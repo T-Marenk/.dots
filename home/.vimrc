@@ -1,6 +1,10 @@
 " Disable compatibility with vi which can cause unexpected issues.
 set nocompatible
 
+" Turn off bells
+
+set belloff=all
+
 " Enable type file detection. Vim will be able to try to detect the type of file in use.
 filetype on
 
@@ -10,15 +14,14 @@ filetype plugin on
 " Load an indent file for the detected file type.
 filetype indent on
 
-" Turn syntax highlighting on
+" Turn syntax highlighting on.
 syntax on
 
 " Add numbers to each line on the left-hand side.
 set number
 
-" Turn off bells
-
-set belloff=all
+" Highlight cursor line underneath the cursor horizontally.
+set cursorline
 
 " Set shift width to 4 spaces.
 set shiftwidth=4
@@ -75,15 +78,72 @@ set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
 
 " PLUGINS ---------------------------------------------------------------- {{{
 
-" Plugin code goes here.
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+Plugin 'tpope/vim-fugitive'
+" plugin from http://vim-scripts.org/vim/scripts.html
+" Plugin 'L9'
+" Git plugin not hosted on GitHub
+Plugin 'git://git.wincent.com/command-t.git'
+" git repos on your local machine (i.e. when working on your own plugin)
+" Plugin 'file:///home/gmarik/path/to/plugin'
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+Plugin 'ycm-core/YouCompleteMe'
+Plugin 'tpope/vim-commentary'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'arcticicestudio/nord-vim'
+Plugin 'lervag/vimtex'
+Plugin 'preservim/nerdtree'
+Plugin 'tpope/vim-surround'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+call vundle#end()            " required
+filetype plugin indent on    " required
+
 
 " }}}
 
 
 " MAPPINGS --------------------------------------------------------------- {{{
 
-" Mappings code goes here.
+" Copy and replace mappings
+nnoremap Y y$
+nnoremap C c$
 
+" Navigate split
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
+
+" Toggle Nerdtree
+nnoremap <c-b> :NERDTreeToggle<CR>
+nnoremap T :vert term<CR>
+
+" Auto close brackets
+inoremap " ""<left>
+inoremap ' ''<left>
+inoremap ( ()<left>
+inoremap [ []<left>
+inoremap { {}<left>
+inoremap {<CR> {<CR>}<ESC>O
+inoremap {;<CR> {<CR>};<ESC>O
 " }}}
 
 
@@ -96,7 +156,14 @@ augroup filetype_vim
     autocmd FileType vim setlocal foldmethod=marker
 augroup END
 
-" More Vimscripts code goes here.
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+colorscheme nord
+
+let g:tex_flavor = 'latex'           " Vim ships with some support for plain TeX, ConTeXt, and LaTeX files. This means that the `.tex` extension is ambiguous. Vimtex is only activated for LaTeX files with 'filetype' set to `tex`.
+let g:vimtex_view_method = 'mupdf'   "  Set the pdf viewer. MuPDF supports forward and backward search via xdotool. For backward search use :VimtexRSearch command. Forward search will only take you to the correct page.  Backward search will take you to the line in Vim that corresponds to the first line of the current page in MuPDF.
+let g:vimtex_compiler_latexmk= {'options' : ['-pdf', '-shell-escape', '-verbose', '-file-line-error', '-synctex=1', '-interaction=nonstopmode',],} " we need to enable -shell-escape to be able to use externalization library for avioiding recompiling unchanged diagrams/graphs created using tikz/pgfplots
+
 
 " }}}
 
