@@ -1,0 +1,9 @@
+export PATH=$PATH:/home/tume/.spicetify
+
+# Editor
+
+export VISUAL=vim
+export EDITOR=vim
+export editor=vim
+
+export PATH="$HOME/bin:$PATH"

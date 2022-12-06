@@ -1,0 +1,20 @@
+# Directories
+home/.config/Code/
+home/.config/ibus/
+home/.config/lutris/
+home/.config/OpenRGB/
+home/.config/pipewire-media-session/
+home/.config/pulse/
+home/.config/pulse_backup/
+home/.config/qBittorrent/
+home/.config/Ryujinx/
+home/.config/spicetify/
+home/.config/spotify/
+home/.config/systemd/
+home/.config/Thunar/
+home/.config/xpad/
+home/.config/xsettingsd/
+home/.config/yuzu/
+home/.config/mimeapps.list
+home/.config/pavucontrol.ini
+
