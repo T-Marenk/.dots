@@ -17,4 +17,9 @@ home/.config/xsettingsd/
 home/.config/yuzu/
 home/.config/mimeapps.list
 home/.config/pavucontrol.ini
+home/.vim/plugged/
+home/.vim/bundle/
 
+# File types
+
+*.swp
