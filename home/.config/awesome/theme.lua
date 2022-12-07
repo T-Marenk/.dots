@@ -7,7 +7,7 @@
 
 local themes_path = require("gears.filesystem").get_themes_dir()
 local dpi = require("beautiful.xresources").apply_dpi
-
+local config_path = require("gears.filesystem").get_configuration_dir()
 -- {{{ Main
 local theme = {}
 theme.wallpaper = themes_path .. "nord/nord-background.png"
@@ -153,6 +153,8 @@ theme.widget_transparent = "#00000000"
 --
 theme.wallpapers = { "/home/tume/Wallpaper/Kyorge.jpg",
 		    "/home/tume/Wallpaper/Pokeball_Gardevoir.jpg"    }
+
+theme.ethernet_icon = config_path .. "assets/Ethernet.png"
 
 theme.wallpaper = function( s ) return theme.wallpapers[s.index] end
 

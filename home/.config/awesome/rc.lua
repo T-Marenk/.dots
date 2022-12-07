@@ -111,6 +111,7 @@ myawesomemenu = {
 }
 
 local debian_icon = gears.filesystem.get_configuration_dir() .. "assets/debian-logo-vector.svg"
+local bluetooth_icon = gears.filesystem.get_configuration_dir() .. "assets/Bluetooth.png"
 
 -- Menu entries
 local menu_awesome = { "Awesome", myawesomemenu, debian_icon }
@@ -144,6 +145,95 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 
 -- Keyboard map indicator and switcher
 mykeyboardlayout = awful.widget.keyboardlayout()
+
+--- Control center
+
+local control_center = wibox {
+    visible = false,
+    bg = beautiful.bg_focus,
+    ontop = true,
+    height = 100,
+    width = 200,
+    shape = function(cr, width, height)
+        gears.shape.rounded_rect(cr, width, height, 10)
+    end
+}
+
+local internet = wibox.widget { 
+        {
+            {
+                image = beautiful.ethernet_icon,
+                resize = true,
+                forced_height = 30,
+                widget = wibox.widget.imagebox
+            },
+            margins = 4,
+            widget = wibox.container.margin
+        }, 
+        bg = beautiful.bg_normal,
+        shape = function(cr, width, height)
+            gears.shape.circle(cr, width, height)
+        end,
+        widget = wibox.container.background 
+}
+
+local button = wibox.widget{
+    widget = wibox.widget.textbox
+}
+
+function get_internet_status()
+    awful.spawn.easy_async_with_shell("~/.scripts/get_internet_status.sh", function(stdout)
+        local status = stdout
+        awesome.emit_signal("internet::status", status)
+    end)
+end
+
+awesome.connect_signal("internet::status", function(status) 
+    button:set_text(status)
+    internet:set_bg(beautiful.fg_normal)
+end)
+
+local bluetooth = wibox.widget {
+    {
+        {
+            {
+                image = bluetooth_icon,
+                resize = true,
+                forced_height = 30,
+                widget = wibox.widget.imagebox
+            },
+            margins = 4,
+            widget = wibox.container.margin
+        }, 
+        bg = beautiful.bg_normal,
+        shape = function(cr, width, height)
+            gears.shape.circle(cr, width, height)
+        end,
+        widget = wibox.container.background 
+    },
+    layout = wibox.layout.align.horizontal
+}
+
+control_center:setup {
+    layout = wibox.layout.align.vertical, 
+    {
+        layout = wibox.layout.fixed.horizontal,
+        spacing = 4,
+        internet,
+        bluetooth,
+        button
+    }
+}
+
+local visible = false
+local function toggle_center()
+    visible = not visible
+    control_center.visible = visible
+    if visible then
+        get_internet_status()
+        awful.placement.top(control_center, { margins = {top = 40, left = awful.screen.focused().workarea.width*0.85}, parent = awful.screen.focused()})
+    end
+end
 
 -- {{{ Wibar
 -- Create a textclock widget
@@ -556,7 +646,7 @@ globalkeys = gears.table.join(
               {description = "select next", group = "layout"}),
     
     -- Lock
-    awful.key({ "Mod1",	          }, "l", function () awful.spawn.with_shell("i3lock-fancy") end,
+    awful.key({ "Mod1",	          }, "l", function () awful.spawn.with_shell("i3lock") end,
     	      { description = "Lock" }),
 
     awful.key({ modkey, "Control" }, "n",
@@ -578,6 +668,10 @@ globalkeys = gears.table.join(
     -- Applications
     awful.key({ modkey },            "a",     function () awful.spawn("rofi -show drun") end,
               {description = "run application", group = "launcher"}),
+    
+    -- Control center
+    awful.key({ modkey }, "c", function() toggle_center() end,
+              {description = "Toggle control center visibility", group = "center"}),
 
     -- Music control
     awful.key({                 }, "XF86AudioPlay",  function () awful.spawn("sp play", false)       end, {description = "play track",     group = "spotify"}),
