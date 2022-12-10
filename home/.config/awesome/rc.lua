@@ -38,6 +38,7 @@ local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
 
 local mic = require("widgets/mic")
 
+local awesomebuttons = require("awesome-buttons.awesome-buttons")
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -152,7 +153,7 @@ local control_center = wibox {
     visible = false,
     bg = beautiful.bg_focus,
     ontop = true,
-    height = 100,
+    height = 300,
     width = 200,
     shape = function(cr, width, height)
         gears.shape.rounded_rect(cr, width, height, 10)
@@ -177,9 +178,40 @@ local internet = wibox.widget {
         widget = wibox.container.background 
 }
 
+local internet_full = wibox.widget {
+    internet,
+    layout = wibox.layout.align.horizontal
+}
+
+local internet_settings = wibox.widget {
+        {
+            {
+                    text = "Internet settings",
+                    widget = wibox.widget.textbox
+            },
+            top = 4, bottom = 4, left = 8, right = 8,
+            widget = wibox.container.margin
+        },    
+        bg = beautiful.fg_focus,
+        shape = function(cr, width, height)
+            gears.shape.rounded_rect(cr, width, height, 4)
+        end,
+        widget = wibox.container.background
+}
+
 local button = wibox.widget{
     widget = wibox.widget.textbox
 }
+
+-- local internet_button = wibox.widget{
+--     internet,
+--     {
+--         button,
+--         top = 14, bottom = -14, right = 20,
+--         widget = wibox.container.margin
+--     },
+--     layout = wibox.layout.align.horizontal
+-- }
 
 function get_internet_status()
     awful.spawn.easy_async_with_shell("~/.scripts/get_internet_status.sh", function(stdout)
@@ -199,7 +231,7 @@ local bluetooth = wibox.widget {
             {
                 image = bluetooth_icon,
                 resize = true,
-                forced_height = 30,
+                forced_height = 40,
                 widget = wibox.widget.imagebox
             },
             margins = 4,
@@ -214,15 +246,46 @@ local bluetooth = wibox.widget {
     layout = wibox.layout.align.horizontal
 }
 
+
+local l = wibox.widget {
+    homogeneous   = false,
+    -- expand        = true,
+    spacing       = 5,
+    min_cols_size = 10,
+    min_rows_size = 10,
+    layout        = wibox.layout.grid,
+}
+
+local l2 = wibox.widget {
+    homogeneous   = false,
+    -- expand        = true,
+    spacing       = 5,
+    min_cols_size = 10,
+    min_rows_size = 10,
+    layout        = wibox.layout.grid,
+}
+
+l:add_widget_at(internet_full, 1, 1, 2, 2)
+l:add_widget_at(button, 2,3,1,1)
+l:add_widget_at(awesomebuttons.with_text{type = 'outline', text='Settins', color = beautiful.fg_focus}, 1,3,1,1)
+l2:add_widget_at(bluetooth, 1,1,2,2)
+l2:add_widget_at(awesomebuttons.with_text{type = 'outline', text='Bluetooth', color = beautiful.fg_focus}, 1,3,1,1)
+
 control_center:setup {
-    layout = wibox.layout.align.vertical, 
-    {
-        layout = wibox.layout.fixed.horizontal,
-        spacing = 4,
-        internet,
-        bluetooth,
-        button
-    }
+    { 
+        {
+            l,
+            l2,
+            spacing = 5,
+           layout = wibox.layout.fixed.vertical
+        },
+        shape_border_width = 1,
+        valign = 'top',
+        halign = 'left',
+        layout = wibox.container.place 
+    },
+   margins = 16,
+   widget = wibox.container.margin
 }
 
 local visible = false
