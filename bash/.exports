@@ -7,3 +7,4 @@ export EDITOR=vim
 export editor=vim
 
 export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
