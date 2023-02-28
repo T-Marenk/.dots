@@ -107,12 +107,14 @@ Plugin 'ycm-core/YouCompleteMe'
 Plugin 'tpope/vim-commentary'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
-Plugin 'arcticicestudio/nord-vim'
+Plugin 'EdenEast/nightfox.nvim' " Vim-Plug
 Plugin 'lervag/vimtex'
 Plugin 'preservim/nerdtree'
 Plugin 'tpope/vim-surround'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+Plugin 'catppuccin/vim', { 'as': 'catppuccin' }
+Plugin 'jiangmiao/auto-pairs'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
@@ -136,14 +138,6 @@ nnoremap <c-l> <c-w>l
 nnoremap <c-b> :NERDTreeToggle<CR>
 nnoremap T :vert term<CR>
 
-" Auto close brackets
-inoremap " ""<left>
-inoremap ' ''<left>
-inoremap ( ()<left>
-inoremap [ []<left>
-inoremap { {}<left>
-inoremap {<CR> {<CR>}<ESC>O
-inoremap {;<CR> {<CR>};<ESC>O
 " }}}
 
 
@@ -156,9 +150,11 @@ augroup filetype_vim
     autocmd FileType vim setlocal foldmethod=marker
 augroup END
 
-autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+set termguicolors
 
-colorscheme nord
+colorscheme catppuccin_mocha
+
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 let g:tex_flavor = 'latex'           " Vim ships with some support for plain TeX, ConTeXt, and LaTeX files. This means that the `.tex` extension is ambiguous. Vimtex is only activated for LaTeX files with 'filetype' set to `tex`.
 let g:vimtex_view_method = 'mupdf'   "  Set the pdf viewer. MuPDF supports forward and backward search via xdotool. For backward search use :VimtexRSearch command. Forward search will only take you to the correct page.  Backward search will take you to the line in Vim that corresponds to the first line of the current page in MuPDF.

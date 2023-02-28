@@ -6,3 +6,6 @@ alias ...='cd ../../..'
 alias l="ls -la"
 
 alias ls='ls --color=auto'
+
+alias vim='nvim'
+alias vi='nvim'

@@ -1,4 +1,4 @@
-# Directories
+# Non important auto configured .config files
 home/.config/Code/
 home/.config/ibus/
 home/.config/lutris/
@@ -24,6 +24,23 @@ home/.config/xfce4/
 home/.config/discord/
 home/.config/GIMP/
 home/.config/xdg-terminals.list
+home/.config/tmc-cli/
+home/.config/totem/
+home/.config/user-dirs.dirs
+home/.config/user-dirs.locale
+home/.config/org.gabmus.hydrapaper.json
+home/.config/libreoffice/
+home/.config/monitors.xml
+home/.config/monitors.xml~
+home/.config/dleyna-server-service.conf
+home/.config/eog/
+home/.config/evolution/
+home/.config/gnome-control-center/
+home/.config/gnome-initial-setup-done
+home/.config/goa-1.0/
+home/.config/google-chrome/
+home/.config/.gsd-keyboard.settings-ported
+home/.config/PCSX2/
 
 # File types
 

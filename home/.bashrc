@@ -44,3 +44,5 @@ if [ -n "$DISPLAY" ]; then
   xset b off
 fi
 . "$HOME/.cargo/env"
+source /home/tume/.tmc-autocomplete.sh || true
+source /home/tume/.tmc-autocomplete.sh || true
