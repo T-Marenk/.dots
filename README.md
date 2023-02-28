@@ -1,6 +1,6 @@
 # Dotfiles
 
-These are my personal dotfiles for my setup using _Awesomewm_
+These are my personal dotfiles
 
 ## System
 
@@ -8,10 +8,8 @@ On my system, I am running the following:
 
 - Distribution: [Debian](https://www.debian.org/)
 
-- Window Manager: [Awesome](https://awesomewm.org/)
+- Desktop enviroment: [Gnome](https://www.gnome.org/) with [PaperWM](https://github.com/paperwm/PaperWM)
 
 - Terminal: [Kitty](https://sw.kovidgoyal.net/kitty/)
 
-- File manager: [Thunar](https://github.com/xfce-mirror/thunar)
-
-- Colour theme: [Nord](https://www.nordtheme.com/)
+- Colour scheme: [Catppuccin mocha](https://github.com/catppuccin/catppuccin)
